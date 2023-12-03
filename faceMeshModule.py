@@ -25,12 +25,13 @@ class FashMeshRecognition():
             for faceLms in self.results.multi_face_landmarks:
                 if draw:
                     self.mpDraw.draw_landmarks(img, faceLms, self.mpFaceMesh.FACEMESH_CONTOURS, self.drawSpec, self.drawSpec)
+
                 face = []
                 # get x,y,z position
                 for id, landmark in enumerate(faceLms.landmark):
                     # get the values of pixels, also mean convert landmarks to pixels
                     imageHeight, imageWeight, imageChannel = img.shape
-                    x, y = int(landmark.x * imageWeight), int(landmark.y * imageHeight)
+                    x,y = int(landmark.x * imageWeight), int(landmark.y * imageHeight)
                     cv2.putText(img, str(id), (x, y), cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 1)
                     # print(id, x, y)
                     face.append([x, y])
