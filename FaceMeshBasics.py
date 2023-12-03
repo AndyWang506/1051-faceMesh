@@ -17,10 +17,10 @@ while True:
     results = faceMesh.process(imgRGB)
     # Display results
     if results.multi_face_landmarks:
-        for faceLandmarks in results.multi_face_landmarks:
-            mpDraw.draw_landmarks(img, faceLandmarks, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
+        for faceLms in results.multi_face_landmarks:
+            mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
             # get x,y,z position
-            for id, landmark in enumerate(faceLandmarks.landmark):
+            for id, landmark in enumerate(faceLms.landmark):
                 # get the values of pixels, also mean convert landmarks to pixels
                 imageHeight, imageWeight, imageChannel = img.shape
                 x,y = int(landmark.x * imageWeight), int(landmark.y * imageHeight)
