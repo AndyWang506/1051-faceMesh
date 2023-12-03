@@ -26,7 +26,6 @@ while True:
                 x,y = int(landmark.x * imageWeight), int(landmark.y * imageHeight)
                 print(id, x,y)
 
-
     # create frame rate, cTime = current, pTime = previous
     cTime = time.time()
     fps = 1/ (cTime-pTime)
