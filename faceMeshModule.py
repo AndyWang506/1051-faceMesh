@@ -1,8 +1,8 @@
 import cv2
-# from cvzone.FaceMeshModule import FaceMeshDetector
+from cvzone.FaceMeshModule import FaceMeshDetector
 import mediapipe as mp
 import time
-# import math
+import math
 
 class FaseMeshRecognition():
     def __init__(self, staticMode=False, maxFace=3, minDetectConf=0.5, minTrackConfi=0.5):
@@ -24,22 +24,24 @@ class FaseMeshRecognition():
 
     # Find the distance between two landmarks based on their index numbers.
     # Application -> when blinking our eyes, the values should be smaller than usual
-    # def findDistance(self,p1, p2, img=None):
-    #     x1, y1 = p1
-    #     x2, y2 = p2
-    #     cx, cy = (x1 + x2) // 2, (y1 + y2) // 2
-    #     length = math.hypot(x2 - x1, y2 - y1)
-    #     info = (x1, y1, x2, y2, cx, cy)
-    #     if img is not None:
-    #         cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
-    #         cv2.circle(img, (x2, y2), 15, (255, 0, 255), cv2.FILLED)
-    #         cv2.line(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
-    #         cv2.circle(img, (cx, cy), 15, (255, 0, 255), cv2.FILLED)
-    #         return length,info, img
-    #     else:
-    #         return length, info
+    def findDistance(self,p1, p2, img=None):
+        x1, y1 = p1
+        x2, y2 = p2
+        cx, cy = (x1 + x2) // 2, (y1 + y2) // 2
+        length = math.hypot(x2 - x1, y2 - y1)
+        info = (x1, y1, x2, y2, cx, cy)
+        if img is not None:
+            cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
+            cv2.circle(img, (x2, y2), 15, (255, 0, 255), cv2.FILLED)
+            cv2.line(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
+            cv2.circle(img, (cx, cy), 15, (255, 0, 255), cv2.FILLED)
+            return length,info, img
+        else:
+            return length, info
+
 
     def findFaceMesh(self, img, draw=True):
+
         # decrease the frame rate
         self.imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.faceMesh.process(self.imgRGB)
@@ -78,12 +80,12 @@ def main():
         img, faces = recognition.findFaceMesh(img)
         if len(faces) != 0:
             print(len(faces[0]))
-        # if faces:
-        #     for face in faces:
-        #         leftEyeUpPoint = face[159]
-        #         leftEyeDownPoint = face[23]
-        #         leftEyeVerticalDistance, info = recognition.findDistance(leftEyeUpPoint, leftEyeDownPoint)
-        #         print(leftEyeVerticalDistance)
+        if faces:
+            for index in faces:
+                leftEyeUpPoint = index[159]
+                leftEyeDownPoint = index[23]
+                leftEyeVerticalDistance, info = recognition.findDistance(leftEyeUpPoint, leftEyeDownPoint)
+                print(leftEyeVerticalDistance)
 
         cTime = time.time()
         fps = 1 / (cTime - pTime)
