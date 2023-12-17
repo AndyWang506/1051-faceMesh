@@ -58,7 +58,7 @@ class FaseMeshRecognition():
                     # get the values of pixels, also mean convert landmarks to pixels
                     imageHeight, imageWeight, imageChannel = img.shape
                     x, y = int(landmark.x * imageWeight), int(landmark.y * imageHeight)
-                    # Display all 468 landmarks on our face
+                    # The following line will Display all 468 landmarks on our face
                     cv2.putText(img, str(id), (x, y), cv2.FONT_HERSHEY_PLAIN, 0.8, (0, 255, 0), 1)
                     print(id, x, y)
                     face.append([x, y])
@@ -77,13 +77,12 @@ def main():
         # create frame rate, cTime = current, pTime = previous
         # need to add 'False' if we want to display 468 landmarks (cv2.putText)
         # we can add 'False' to remove the white landmarks and lines
-        img, faces = recognition.findFaceMesh(img)
-        if len(faces) != 0:
-            print(len(faces[0]))
+        img, faces = recognition.findFaceMesh(img,False)
+
         if faces:
             for index in faces:
                 leftEyeUpPoint = index[159]
-                leftEyeDownPoint = index[23]
+                leftEyeDownPoint = index[145]
                 leftEyeVerticalDistance, info = recognition.findDistance(leftEyeUpPoint, leftEyeDownPoint)
                 print(leftEyeVerticalDistance)
 
